@@ -3,7 +3,7 @@
 (defn parse-int
   [s]
   (let [delim (re-find #"[^/\d]" (apply str s))
-        pat (re-pattern (re-pattern (str "[\\D" delim "]")))
+        pat (re-pattern (str "[\\D" delim "]"))
         st (flatten (map #(clojure.string/split (str %) pat) s))]
     (map #(Integer/parseInt %) (remove empty? st))))
 
