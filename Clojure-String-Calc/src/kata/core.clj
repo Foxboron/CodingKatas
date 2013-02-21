@@ -1,9 +1,11 @@
 (ns kata.core)
 
-(defn parse-int [s]
-  (println s)
-  (let [st (flatten (map #(clojure.string/split (str %) #"\D+") s))]
-    (map #(Integer/parseInt %) st)))
+(defn parse-int
+  [s]
+  (let [delim (re-find #"[^/\d]" (apply str s))
+        pat (re-pattern (re-pattern (str "[\\D" delim "]")))
+        st (flatten (map #(clojure.string/split (str %) pat) s))]
+    (map #(Integer/parseInt %) (remove empty? st))))
 
 (defn add
   "Add items together"
