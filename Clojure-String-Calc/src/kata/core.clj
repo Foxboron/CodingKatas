@@ -1,10 +1,11 @@
-(ns kata.core)
+(ns kata.core
+  (:require [clojure.string :refer (split)]))
 
 (defn parse-int
   [s]
-  (let [delim (re-find #"[^/\d]" (apply str s))
+  (let [delim (re-find #"[^/\s\d]+" (apply str s))
         pat (re-pattern (str "[\\D" delim "]"))
-        st (flatten (map #(clojure.string/split (str %) pat) s))]
+        st (flatten (map #(split (str %) pat) s))]
     (map #(Integer/parseInt %) (remove empty? st))))
 
 (defn add
